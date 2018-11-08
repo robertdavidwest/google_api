@@ -3,8 +3,7 @@ from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
 
-# If modifying these scopes, delete the file token.json.
-SCOPES = 'https://www.googleapis.com/auth/gmail.readonly'
+from config import SCOPES
 
 def main():
     """Shows basic usage of the Gmail API.
