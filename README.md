@@ -40,8 +40,8 @@ q = "looking for this text"
 result = service.messages().list(userId='me', q=q).execute()
 msg_ids = [r['id'] for r in result.get('messages')]
 for id_ in msg_ids:
-	msg = service.messages().get(userId='me', id=id_).execute()
-	print(msg['snippet'])
+    msg = service.messages().get(userId='me', id=id_).execute()
+    print(msg['snippet'])
 
 
 # Converting a CSV attachment from an e-mail into a pd.DataFrame
