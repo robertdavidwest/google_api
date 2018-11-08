@@ -12,13 +12,13 @@
 
 * After the set up you will download a file called `credentials.json`. Be sure to update the variable `GMAIL_CREDENTIALS_PATH` path to this file in `config.py`. Also update the `GMAIL_TOKEN_PATH` to be a file called `*-token.json` in the same directory
 
-e.g:
-```
-config.py 
+    e.g:
+    ```
+    config.py 
 
-GMAIL_CREDENTIALS_PATH = "credentials.json"
-GMAIL_TOKEN_PATH = "token.json"
-```
+    GMAIL_CREDENTIALS_PATH = "credentials.json"
+    GMAIL_TOKEN_PATH = "token.json"
+    ```
 
 ### Usage 
 
