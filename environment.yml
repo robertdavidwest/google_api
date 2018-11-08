@@ -1,0 +1,8 @@
+name: google-api
+channels:
+  - conda-forge
+dependencies:
+  - python=2.7
+  - pandas
+  - oauth2client
+  - google-api-python-client
