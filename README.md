@@ -29,9 +29,9 @@ API Documentation is here: https://developers.google.com/resources/api-libraries
 ```
 from gmail import *
 search_query = "test"
+service = get_gmail_service()
 
 # read a snippet of text from all e-mails that contains the str 'test'
-service = get_gmail_service()
 _, snippets = get_message_ids(service, search_query, snippet=True)
 for sn in snippets:
     print(sn)
