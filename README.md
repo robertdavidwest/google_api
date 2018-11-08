@@ -4,7 +4,7 @@
 
 * Set up the conda envrionment "google-api":
 
-    $ conda env create -f environment.yml 
+        $ conda env create -f environment.yml 
 
 * Follow these instructions to allow python to access your gmail account (skip the past about installing python packages, thats already taken care of in the conda envionment"):
 
