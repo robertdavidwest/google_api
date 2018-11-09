@@ -23,11 +23,10 @@ def get_gmail_service():
     return service.users()
 
 
-def get_message_ids(service, search_query, snippet=False):
+def query_for_message_ids(service, search_query):
     """searching for an e-mail (Supports the same query format as the Gmail search box.
     For example, "from:someuser@example.com rfc822msgid:<somemsgid@example.com>
-    is:unread") if snippet=True then a second parameter is returned with a list of
-    e-mail snippets
+    is:unread")
     """
     result = service.messages().list(userId='me', q=search_query).execute()
     results = result.get('messages')
@@ -36,12 +35,7 @@ def get_message_ids(service, search_query, snippet=False):
     else:
         msg_ids = []
 
-    if not snippet:
-        return msg_ids
-
-    snippets = [service.messages().get(userId='me', id=id_).execute()['snippet']
-                for id_ in msg_ids]
-    return msg_ids, snippets
+    return msg_ids
 
 
 def _get_attachment_data(service, messageId, attachmentId):
@@ -91,7 +85,7 @@ def get_csv_attachments_from_msg_id(service, messageId):
 
 
 def query_for_csv_attachments(service, search_query):
-    message_ids = get_message_ids(service, search_query)
+    message_ids = query_for_message_ids(service, search_query)
     all_csvs = {}
     for msg_id in message_ids:
         csvs = get_csv_attachments_from_msg_id(service, msg_id)
