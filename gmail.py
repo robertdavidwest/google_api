@@ -76,21 +76,25 @@ def get_csv_attachments_from_msg_id(service, messageId):
     dictionary are the csv filenames"""
     msg = service.messages().get(userId='me', id=messageId).execute()
     msg_parts = msg.get('payload').get('parts')
+    headers = msg.get('payload').get('headers')
+    subject = [h['value'] for h in headers if h['name']=='Subject'][0]
+    if not msg_parts:
+        return
     msg_parts = _flatten_nested_email_parts(msg_parts)
     att_parts = [p for p in msg_parts if p['mimeType']==CSV_MIME_TYPE]
     filenames = [p['filename'] for p in att_parts]
     datas = [_get_attachment_from_part(messageId, p) for p in att_parts]
     dfs = [_convert_attachment_data_to_dataframe(d) for d in datas]
-    return {f:d for f,d in zip(filenames, dfs)}
+    return [{'emailsubject': subject, 'filename': f, 'data': d}
+            for f, d in zip(filenames, dfs)]
 
 
 def query_for_csv_attachments(service, search_query):
     message_ids = query_for_message_ids(service, search_query)
-    all_csvs = {}
-    for msg_id in message_ids:
-        csvs = get_csv_attachments_from_msg_id(service, msg_id)
-        all_csvs.update(csvs)
-    return all_csvs
+    csvs = [get_csv_attachments_from_msg_id(service, msg_id)
+            for msg_id in message_ids]
+    csvs = [x for x in csvs if x]
+    return csvs
 
 
 if __name__ == '__main__':
