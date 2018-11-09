@@ -28,18 +28,19 @@ API Documentation is here: https://developers.google.com/resources/api-libraries
 
 ```
 from gmail import *
-search_query = "test"
 service = get_gmail_service()
 
 # read a snippet of text from all e-mails that contains the str 'test'
+search_query = "test"
 _, snippets = get_message_ids(service, search_query, snippet=True)
 for sn in snippets:
     print(sn)
 
-# convert a csv file from an e-mail into a pd.DataFrame
-# if that email contains the word 'test'
-message_id = get_message_ids(service, search_query)[0]
-df = get_csv_attachments(service, message_id)[0]
-print(df)
+# get all attachments from e-mails containing 'test'
+search_query = "test"
+service = get_gmail_service()
+csv_dfs = query_for_csv_attachments(service, search_query)
+print(csv_dfs)
+    
 ```
 
