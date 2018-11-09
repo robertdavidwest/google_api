@@ -95,7 +95,7 @@ def query_for_csv_attachments(service, search_query):
     all_csvs = {}
     for msg_id in message_ids:
         csvs = get_csv_attachments_from_msg_id(service, msg_id)
-        all_csvs.updates(csvs)
+        all_csvs.update(csvs)
     return all_csvs
 
 
