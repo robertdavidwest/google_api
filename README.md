@@ -30,12 +30,6 @@ API Documentation is here: https://developers.google.com/resources/api-libraries
 from gmail import *
 service = get_gmail_service()
 
-# read a snippet of text from all e-mails that contains the str 'test'
-search_query = "test"
-_, snippets = get_message_ids(service, search_query, snippet=True)
-for sn in snippets:
-    print(sn)
-
 # get all attachments from e-mails containing 'test'
 search_query = "test"
 service = get_gmail_service()
