@@ -79,7 +79,7 @@ def get_csv_attachments_from_msg_id(service, messageId):
     headers = msg.get('payload').get('headers')
     subject = [h['value'] for h in headers if h['name']=='Subject'][0]
     if not msg_parts:
-        return
+        return []
     msg_parts = _flatten_nested_email_parts(msg_parts)
     att_parts = [p for p in msg_parts if p['mimeType']==CSV_MIME_TYPE]
     filenames = [p['filename'] for p in att_parts]
@@ -91,9 +91,10 @@ def get_csv_attachments_from_msg_id(service, messageId):
 
 def query_for_csv_attachments(service, search_query):
     message_ids = query_for_message_ids(service, search_query)
-    csvs = [get_csv_attachments_from_msg_id(service, msg_id)
-            for msg_id in message_ids]
-    csvs = [x for x in csvs if x]
+    csvs = []
+    for msg_id in message_ids:
+        loop_csvs = get_csv_attachments_from_msg_id(service, msg_id)
+        csvs.extend(loop_csvs)
     return csvs
 
 
