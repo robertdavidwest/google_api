@@ -1,7 +1,7 @@
 from setuptools import setup
-
+from google_api import __version__
 setup(name='google_api',
-      version='0.0.1',
+      version=__version__,
       description='Connect to the google api',
       url='https://github.com/robertdavidwest/google_api',
       author='Robert West',
