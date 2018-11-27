@@ -10,14 +10,15 @@
 
     https://developers.google.com/gmail/api/quickstart/python
 
-* After the set up you will download a file called `credentials.json`. Be sure to update the variable `GMAIL_CREDENTIALS_PATH` path to this file in `config.py`. Also update the `GMAIL_TOKEN_PATH` to be a file called `*-token.json` in the same directory
+* After the set up you will download a file called `credentials.json`. Be sure to update the variable `GMAIL_CREDENTIALS_PATH` path to this file in `example.py`. Also update the `GMAIL_TOKEN_PATH` to be a file called `*-token.json` in the same directory
 
     e.g:
     ```
-    config.py 
+    example.py 
 
     GMAIL_CREDENTIALS_PATH = "credentials.json"
     GMAIL_TOKEN_PATH = "token.json"
+    ...
     ```
 
 ### Usage 
@@ -27,13 +28,14 @@ API Documentation is here: https://developers.google.com/resources/api-libraries
 * Use this function to get the gmail service and access to all messages (taken from the `quickstart.py` code):
 
 ```
-from gmail import *
-service = get_gmail_service()
+example.py
+...
+from google_api gmail import gmail
 
 # get all attachments from e-mails containing 'test'
 search_query = "test"
-service = get_gmail_service()
-csv_dfs = query_for_csv_attachments(service, search_query)
+service = gmail.get_gmail_service(GMAIL_CREDENTIALS_PATH, GMAIL_TOKEN_PATH)
+csv_dfs = gmail.query_for_csv_attachments(service, search_query)
 print(csv_dfs)
     
 ```

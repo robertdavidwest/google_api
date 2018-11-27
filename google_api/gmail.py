@@ -8,16 +8,14 @@ from oauth2client import file, client, tools
 
 from config import (
     SCOPES,
-    GMAIL_CREDENTIALS_PATH,
-    GMAIL_TOKEN_PATH,
     CSV_MIME_TYPE
 )
 
-def get_gmail_service():
-    store = file.Storage(GMAIL_TOKEN_PATH)
+def get_gmail_service(credentials_path, token_path):
+    store = file.Storage(token_path)
     creds = store.get()
     if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets(GMAIL_CREDENTIALS_PATH, SCOPES)
+        flow = client.flow_from_clientsecrets(credentials_path, SCOPES)
         creds = tools.run_flow(flow, store)
     service = build('gmail', 'v1', http=creds.authorize(Http()))
     return service.users()
@@ -44,7 +42,7 @@ def _get_attachment_data(service, messageId, attachmentId):
     return att['data']
 
 
-def _get_attachment_from_part(messageId, part):
+def _get_attachment_from_part(service, messageId, part):
     body = part.get('body')
     data = body.get('data')
     attachmentId = body.get('attachmentId')
@@ -83,7 +81,7 @@ def get_csv_attachments_from_msg_id(service, messageId):
     msg_parts = _flatten_nested_email_parts(msg_parts)
     att_parts = [p for p in msg_parts if p['mimeType']==CSV_MIME_TYPE]
     filenames = [p['filename'] for p in att_parts]
-    datas = [_get_attachment_from_part(messageId, p) for p in att_parts]
+    datas = [_get_attachment_from_part(service, messageId, p) for p in att_parts]
     dfs = [_convert_attachment_data_to_dataframe(d) for d in datas]
     return [{'emailsubject': subject, 'filename': f, 'data': d}
             for f, d in zip(filenames, dfs)]
@@ -96,10 +94,3 @@ def query_for_csv_attachments(service, search_query):
         loop_csvs = get_csv_attachments_from_msg_id(service, msg_id)
         csvs.extend(loop_csvs)
     return csvs
-
-
-if __name__ == '__main__':
-    search_query = "test"
-    service = get_gmail_service()
-    csv_dfs = query_for_csv_attachments(service, search_query)
-    print(csv_dfs)
