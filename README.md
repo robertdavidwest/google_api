@@ -30,7 +30,7 @@ API Documentation is here: https://developers.google.com/resources/api-libraries
 ```
 example.py
 ...
-from google_api gmail import gmail
+from google_api import gmail
 
 # get all attachments from e-mails containing 'test'
 search_query = "test"
