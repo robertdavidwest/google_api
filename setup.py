@@ -6,7 +6,7 @@ setup(name='google_api',
       url='https://github.com/robertdavidwest/google_api',
       author='Robert West',
       author_email='robert.david.west@gmail.com',
-      license='',
+      license='MIT',
       packages=['google_api'],
       zip_safe=False)
 
