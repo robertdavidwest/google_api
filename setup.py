@@ -1,6 +1,6 @@
 from setuptools import setup
 from google_api import __version__
-setup(name='google_api',
+setup(name='google_api_rdw',
       version=__version__,
       description='Connect to the google api',
       url='https://github.com/robertdavidwest/google_api',
